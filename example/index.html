@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="exampleApp">
+<head>
+    <title>Test xp-module-session</title>
+
+    <link rel="stylesheet" type="text/css" href="./../bower_components/xp-base-style/dist/xp-base-style.css">
+    <link rel="stylesheet" type="text/css" href="./../bower_components/ng-dialog/css/ngDialog.min.css">
+    <link rel="stylesheet" type="text/css" href="./../bower_components/ng-dialog/css/ngDialog-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="./../dist/xp-module-session.css">
+
+    <script type="text/javascript" src="./../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./../bower_components/ng-dialog/js/ngDialog.min.js"></script>
+    <script type="text/javascript" src="./../bower_components/xp-client-auth/dist/client-auth.js"></script>
+    <script type="text/javascript" src="./../dist/xp-module-session.js"></script>
+
+    <script type="text/javascript" src="./example.js"></script>
+</head>
+<body ng-controller="sampleController">
+    <button ng-click="signIn()">Login</button>
+    <button ng-click="signUp()">Register</button>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<div cg-busy="{promise:providerPromise.promise,templateUrl:'ui/loader/fill-loader.html'}" class="module-sessions-signup ui-modal">
+    <div class="modal-title">
+        <h1>{{ 'MODAL.signup_title' | translate }}</h1>
+    </div>
+    <form name="signUpForm" novalidate="novalidate" valdr-type="sessions">
+        <p>{{ 'MODAL.session_social' | translate }}</p>
+        <div ng-class=" {disabled: submitInProgress} " class="social">
+            <div ng-click="connectProvider('facebook')" class="social-button social-button__fb"></div>
+            <div ng-click="connectProvider('naszaklasa')" ng-if="locale == 'pl'" class="social-button social-button__nk"></div>
+            <div ng-click="connectProvider('vkontakte')" ng-if="locale == 'ru'" class="social-button social-button__vk"></div>
+            <div ng-click="connectProvider('odnoklassniki')" ng-if="locale == 'ru'" class="social-button social-button__ok"></div>
+            <div ng-click="connectProvider('mailru')" ng-if="locale == 'ru'" class="social-button social-button__mm"></div>
+            <div ng-click="connectProvider('google')" ng-if="locale == 'en' || locale == 'pl'" class="social-button social-button__gp"></div>
+            <div ng-click="connectProvider('twitter')" ng-if="locale == 'en'" class="social-button social-button__tw"></div>
+            <div ng-click="connectProvider('yahoo')" ng-if="locale == 'en'" class="social-button social-button__ya"></div>
+        </div>
+        <div class="separator">
+            <p>{{ 'MODAL.or' | translate }}</p>
+        </div>
+        <div valdr-form-group="valdr-form-group" class="control control-input">
+            <label>{{ 'MODAL.session_email' | translate }}</label>
+            <input type="email" name="email" ng-model="email" ng-keyup="clearError(806)" ng-disabled="submitInProgress"/>
+        </div>
+        <div valdr-form-group="valdr-form-group" class="control control-input">
+            <label>{{ 'MODAL.session_password' | translate }}</label>
+            <input type="password" name="password" ng-model="password" ng-disabled="submitInProgress"/>
+        </div>
+        <div valdr-form-group="valdr-form-group" class="control control-input">
+            <label>{{ 'MODAL.session_nick' | translate }}</label>
+            <input type="text" name="display-name" ng-model="display_name" maxlength="20" ng-disabled="submitInProgress"/>
+        </div>
+        <div class="form-button">
+            <p translate="{{'MODAL.register_text'}}" class="mute"></p>
+            <button ng-click="register()" cg-busy="{promise:registerPromise,wrapperClass:'transparent', templateUrl: 'ui/loader/loader.html'}" class="btn btn__success"><span ng-hide="submitInProgress">{{ 'COMMON.button_join' | translate }}</span></button>
+        </div>
+        <div ng-if="!submitInProgress" ng-show="error_message" class="form-errors">{{ error_message }}</div>
+        <div class="modal-footer">{{ 'MODAL.session_have_account' | translate }}&nbsp;<a ng-click="showSignIn()">{{ 'COMMON.button_signin' | translate }}</a></div>
+    </form>
+</div>
