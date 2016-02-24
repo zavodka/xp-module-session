@@ -25,6 +25,9 @@ gulp.task('copy', ['coffee', 'template'], function(cb) {
     gulp.src('./tmp/*.js')
         .pipe(concat('xp-module-session.js'))
         .pipe(gulp.dest('./dist/'));
+    gulp.src('./src/style.scss')
+        .pipe(concat('xp-module-session.scss'))
+        .pipe(gulp.dest('./dist/'));
     cb();
 });
 
