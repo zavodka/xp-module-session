@@ -1,23 +1,26 @@
 {
-    "name": "xp-module-session",
-    "description": "",
-    "main": [
-        "dist/xp-module-session.js",
-        "dist/xp-module-session.scss"
-    ],
-    "version": "0.0.1",
-    "dependencies": {
-        "angular": ">=1.2.x",
-        "ng-dialog": "^0.5.7",
-        "xp-base-style": "ssh://git@stash.101xp.com:7999/com/xp-base-style.git",
-        "xp-client-auth": "ssh://git@stash.101xp.com:7999/com/xp-clietn-auth.git"
-    },
-    "ignore": [
-        "src",
-        "test"
-    ],
-    "devDependencies": {
-        "angular-mocks": ">= 1.2.x",
-        "angular": ">= 1.2.x"
-    }
+  "name": "xp-module-session",
+  "description": "",
+  "main": [
+    "dist/xp-module-session.js",
+    "dist/xp-module-session.scss"
+  ],
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.4.4",
+    "angular-translate": "2.6.1",
+    "ngDialog": "0.5.1",
+    "xp-base-style": "ssh://git@stash.101xp.com:7999/com/xp-base-style.git",
+    "xp-client-auth": "ssh://git@stash.101xp.com:7999/com/xp-clietn-auth.git",
+    "xp-form-helper": "ssh://git@stash.101xp.com:7999/com/xp-form-helper.git",
+    "angular-route": "1.4.4"
+  },
+  "ignore": [
+    "src",
+    "test"
+  ],
+  "devDependencies": {
+    "angular-mocks": "1.4.4",
+    "angular": "1.4.4"
+  }
 }

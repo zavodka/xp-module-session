@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, moduleSession, $q) ->
+angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, moduleSession, $q, xpFormHelper) ->
     @_form = 'signInForm'
 
     @errors =
@@ -11,19 +11,18 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
 
     $scope.login = () ->
         if $scope.signIn.$valid and not $scope.submitInProgress
-            do @startSubmiting
+            do xpFormHelper.startSubmiting
 
             params = {
                 username: $scope.email
                 password: $scope.password
-                client_id: ''
                 remember: $scope.remember
             }
 
             loginPromise = $q.defer()
 
             $auth.submitLogin(params).then ((data) ->
-                $auth.principal.authenticate({
+                $auth.authenticate({
                     name: data.username
                     roles: ['user']
                 })
@@ -31,7 +30,7 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
                 moduleSession.close()
                 loginPromise.resolve(user)
             ), (res) ->
-                errorHandler res
+                xpFormHelper.errorHandler res
 
         return loginPromise.promise
 

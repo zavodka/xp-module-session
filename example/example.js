@@ -1,4 +1,18 @@
-var exampleApp = angular.module('exampleApp', ['xp-module-session', 'client-auth']);
+var exampleApp = angular.module('exampleApp', ['xp-module-session', 'xp-client-auth', 'ngCookies']);
+
+exampleApp.config(function($translateProvider) {
+    return $translateProvider.translations('ru', {}).preferredLanguage('ru');
+});
+
+exampleApp.config(function($authProvider) {
+    $authProvider.configure({
+        client_id: '5B1EB814FEC8C',
+        apiUrl: {
+            'api': 'https://api.101xp.com',
+            'auth': 'https://auth.101xp.com'
+        }
+    });
+});
 
 exampleApp.controller('sampleController', function($scope, moduleSession){
     $scope.signIn = function () {

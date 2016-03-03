@@ -1,4 +1,4 @@
-angular.module('xp-module-session', ['ngDialog', 'sessionTemplates']);
+angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate']);
 
 angular.module('xp-module-session').provider('moduleSession', function() {
   var config;
@@ -50,7 +50,7 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
-angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q) {
+angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper) {
   var loginPromise;
   this._form = 'signInForm';
   this.errors = {
@@ -63,18 +63,17 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   $scope.locale = moduleSession.getConfig().locale;
   $scope.login = function() {
     var params;
-    if (this.$scope.signIn.$valid && !$scope.submitInProgress) {
-      this.startSubmiting();
+    if ($scope.signIn.$valid && !$scope.submitInProgress) {
+      xpFormHelper.startSubmiting();
       params = {
         username: $scope.email,
         password: $scope.password,
-        client_id: '',
         remember: $scope.remember
       };
       loginPromise = $q.defer();
       $auth.submitLogin(params).then((function(data) {
         var user;
-        $auth.principal.authenticate({
+        $auth.authenticate({
           name: data.username,
           roles: ['user']
         });
@@ -82,7 +81,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
         moduleSession.close();
         return loginPromise.resolve(user);
       }), function(res) {
-        return errorHandler(res);
+        return xpFormHelper.errorHandler(res);
       });
     }
     return loginPromise.promise;
