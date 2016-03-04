@@ -5,30 +5,29 @@ var concat = require('gulp-concat');
 var flatten = require('gulp-flatten');
 var browserSync = require('browser-sync');
 var templateCache = require('gulp-angular-templatecache');
+var del = require('del');
+var runSequence = require('run-sequence');
 
-gulp.task('coffee', function(cb) {
-    gulp.src('./src/**/*.coffee')
+gulp.task('coffee', function() {
+    return gulp.src('./src/**/*.coffee')
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(concat('app.js'))
         .pipe(gulp.dest('./tmp/'));
-    cb();
 });
 
-gulp.task('template', function(cb) {
-    gulp.src('./src/**/*.html')
+gulp.task('template', function() {
+    return gulp.src('./src/**/*.html')
         .pipe(templateCache({standalone: true, module: 'sessionTemplates'}))
         .pipe(gulp.dest('./tmp/'));
-    cb();
 });
 
-gulp.task('copy', ['coffee', 'template'], function(cb) {
+gulp.task('copy', function() {
     gulp.src('./tmp/*.js')
         .pipe(concat('xp-module-session.js'))
         .pipe(gulp.dest('./dist/'));
-    gulp.src('./src/style.scss')
+    return gulp.src('./src/style.scss')
         .pipe(concat('xp-module-session.scss'))
         .pipe(gulp.dest('./dist/'));
-    cb();
 });
 
 gulp.task('serve', ['build'], function(cb) {
@@ -38,7 +37,19 @@ gulp.task('serve', ['build'], function(cb) {
             baseDir: ['./example', './']
         }
     });
-    cb();
 });
 
-gulp.task('build', ['coffee', 'template', 'copy'])
+gulp.task('clean', function() {
+    return del([
+        './tmp/',
+        './dist/'
+    ]);
+});
+
+gulp.task('build', function() {
+    runSequence(
+        'clean',
+        ['coffee', 'template'],
+        'copy'
+    );
+})

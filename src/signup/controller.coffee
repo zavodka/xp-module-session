@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession) ->
+angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession, xpFormHelper) ->
     @_form = 'signUpForm'
 
     @errors =
@@ -9,7 +9,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
 
     $scope.register = () ->
         if $scope.signUpForm.$valid and not $scope.submitInProgress
-            do startSubmiting
+            do xpFormHelper.startSubmiting
 
             password_confirm = $scope.password
 
@@ -18,22 +18,27 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
                 password: $scope.password
                 password_confirm: password_confirm
                 username: $scope.display_name
-                lcoale: ''
+                locale: 'ru'
             }
 
             registerPromise = $q.defer()
 
-            $auth.submitregistration(params, true).registerPromise.then (res) ->
-                $auth.submitLogin(params).then (res) ->
-                    $auth.principal.authenticate({
+            $auth.submitRegistration(params, true).then (res) ->
+                post_data = {
+                    username: params.email
+                    password: params.password
+                    remember: true
+                }
+                $auth.submitLogin(post_data).then (res) ->
+                    $auth.auth({
                         name: $scope.email
                         roles: ['user']
                     })
-                    user = $auth.getUserInfo()
-                    moduleSession.close()
-                    registerPromise.resovle(user)
+                    $auth.getUserInfo().then (user) ->
+                        moduleSession.close()
+                        registerPromise.resolve(user)
                 , (res) ->
-                    errorHandler res.data
+                    xpFormHelper.errorHandler res.data
 
             return registerPromise.promise
 

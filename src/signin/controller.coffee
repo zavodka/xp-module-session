@@ -22,13 +22,13 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
             loginPromise = $q.defer()
 
             $auth.submitLogin(params).then ((data) ->
-                $auth.authenticate({
+                $auth.auth({
                     name: data.username
                     roles: ['user']
                 })
-                user = $auth.getUserInfo()
-                moduleSession.close()
-                loginPromise.resolve(user)
+                $auth.getUserInfo().then (user) ->
+                    moduleSession.close()
+                    loginPromise.resolve(user)
             ), (res) ->
                 xpFormHelper.errorHandler res
 
