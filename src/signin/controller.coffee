@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, moduleSession, $q, xpFormHelper) ->
+angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope) ->
     @_form = 'signInForm'
 
     @errors =
@@ -28,6 +28,7 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
                 })
                 $auth.getUserInfo().then (user) ->
                     moduleSession.close()
+                    $rootScope.$broadcast 'login:success'
                     loginPromise.resolve(user)
             ), (res) ->
                 xpFormHelper.errorHandler res

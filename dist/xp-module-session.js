@@ -50,7 +50,7 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
-angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper) {
+angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope) {
   var loginPromise;
   this._form = 'signInForm';
   this.errors = {
@@ -78,6 +78,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
         });
         return $auth.getUserInfo().then(function(user) {
           moduleSession.close();
+          $rootScope.$broadcast('login:success');
           return loginPromise.resolve(user);
         });
       }), function(res) {
