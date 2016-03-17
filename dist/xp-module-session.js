@@ -17,7 +17,6 @@ angular.module('xp-module-session').provider('moduleSession', function() {
         return {
           show: function(type, params) {
             var options;
-            options = {};
             switch (type) {
               case 'login':
                 options = {
@@ -61,6 +60,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   }
   loginPromise = null;
   $scope.locale = moduleSession.getConfig().locale;
+  $scope.connectProvider = xpFormHelper.connectProvider;
   $scope.login = function() {
     var params;
     if ($scope.signIn.$valid && !$scope.submitInProgress) {

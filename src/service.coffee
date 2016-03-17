@@ -12,8 +12,6 @@ angular.module('xp-module-session').provider('moduleSession',  ->
             'ngDialog'
             (ngDialog) ->
                 show: (type, params) ->
-                    options = {}
-
                     switch type
                         when 'login'
                             options = {
@@ -28,7 +26,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                                 closeByDocument: false
                             }
 
-                    ngDialog.open(options)
+                    return ngDialog.open(options)
 
                 close: (dfd, reason) ->
                     dfd.reject(reason) if dfd?
