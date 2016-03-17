@@ -87,8 +87,14 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
     }
     return loginPromise.promise;
   };
-  return $scope.close = function() {
+  $scope.close = function() {
     return moduleSession.close(loginPromise, 'cancel login');
+  };
+  $scope.showSignUp = function() {
+    return $rootScope.$broadcast('dialog:signup');
+  };
+  return $scope.restorePassword = function() {
+    return $rootScope.$broadcast('dialog:restorePassword');
   };
 });
 

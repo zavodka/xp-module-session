@@ -46,10 +46,11 @@ gulp.task('clean', function() {
     ]);
 });
 
-gulp.task('build', function() {
+gulp.task('build', function(cb) {
     runSequence(
         'clean',
         ['coffee', 'template'],
-        'copy'
+        'copy',
+        cb
     );
 })

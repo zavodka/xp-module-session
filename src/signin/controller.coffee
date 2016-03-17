@@ -40,4 +40,12 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
 
     $scope.close = () ->
         moduleSession.close(loginPromise, 'cancel login')
+
+
+    $scope.showSignUp = () ->
+        $rootScope.$broadcast 'dialog:signup'
+
+
+    $scope.restorePassword = () ->
+        $rootScope.$broadcast 'dialog:restorePassword'
 )
