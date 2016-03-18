@@ -142,8 +142,11 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
       return registerPromise.promise;
     }
   };
-  return $scope.close = function() {
+  $scope.close = function() {
     return moduleSession.close(registerPromise, 'cancel register');
+  };
+  return $scope.showSignUp = function() {
+    return $rootScope.$broadcast('dialog:signup');
   };
 });
 
