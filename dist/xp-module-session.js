@@ -105,6 +105,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
     806: 'email'
   };
   $scope.locale = moduleSession.getConfig().locale;
+  $scope.connectProvider = xpFormHelper.connectProvider;
   registerPromise = null;
   $scope.register = function() {
     var params, password_confirm;
