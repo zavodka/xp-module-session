@@ -4,6 +4,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
         locale: 'ru'
         loginTemplate: null
         registerTemplate: null
+        socialAuth: true
     return {
         configure: (params) ->
             angular.extend(config, params)

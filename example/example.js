@@ -13,6 +13,11 @@ exampleApp.config(function($authProvider) {
         }
     });
 });
+exampleApp.config(function(moduleSessionProvider) {
+    moduleSessionProvider.configure({
+        socialAuth: false
+    })
+});
 
 exampleApp.controller('sampleController', function($scope, moduleSession){
     $scope.signIn = function () {

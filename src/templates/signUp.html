@@ -3,8 +3,8 @@
         <h1>{{ 'MODAL.signup_title' | translate }}</h1>
     </div>
     <form name="signUpForm" novalidate="novalidate" valdr-type="sessions">
-        <p>{{ 'MODAL.session_social' | translate }}</p>
-        <div ng-class=" {disabled: submitInProgress} " class="social">
+        <p ng-if="socialAuth">{{ 'MODAL.session_social' | translate }}</p>
+        <div ng-if="socialAuth" ng-class=" {disabled: submitInProgress} " class="social">
             <div ng-click="connectProvider('facebook')" class="social-button social-button__fb"></div>
             <div ng-click="connectProvider('naszaklasa')" ng-if="locale == 'pl'" class="social-button social-button__nk"></div>
             <div ng-click="connectProvider('vkontakte')" ng-if="locale == 'ru'" class="social-button social-button__vk"></div>
@@ -14,7 +14,7 @@
             <div ng-click="connectProvider('twitter')" ng-if="locale == 'en'" class="social-button social-button__tw"></div>
             <div ng-click="connectProvider('yahoo')" ng-if="locale == 'en'" class="social-button social-button__ya"></div>
         </div>
-        <div class="separator">
+        <div ng-if="socialAuth" class="separator">
             <p>{{ 'MODAL.or' | translate }}</p>
         </div>
         <div valdr-form-group="valdr-form-group" class="control control-input">

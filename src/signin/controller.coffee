@@ -10,6 +10,7 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
     $scope.locale = moduleSession.getConfig().locale
 
     $scope.connectProvider = xpFormHelper.connectProvider
+    $scope.socialAuth = moduleSession.getConfig().socialAuth
 
     $scope.login = () ->
         if $scope.signIn.$valid and not $scope.submitInProgress

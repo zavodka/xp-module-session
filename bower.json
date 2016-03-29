@@ -20,7 +20,9 @@
     "test"
   ],
   "devDependencies": {
-    "angular-mocks": "1.4.4",
+    "angular-mocks": "1.4.4"
+},
+  "resolutions": {
     "angular": "1.4.4"
   }
 }
