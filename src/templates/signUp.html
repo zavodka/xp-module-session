@@ -30,7 +30,9 @@
             <input type="text" name="display-name" ng-model="display_name" maxlength="20" ng-disabled="submitInProgress"/>
         </div>
         <div class="form-button">
-            <p translate="{{'MODAL.register_text'}}" class="mute"></p>
+            <p class="mute">
+                Регистрируясь, вы соглашаетесь с правилами, установленными <a href="https://101xp.com/pages/eula" target="_blank">пользовательским соглашением</a> и <a href="https://101xp.com/pages/policy" target="_blank">политикой приватности</a>.
+            </p>
             <button ng-click="register()" cg-busy="{promise:registerPromise,wrapperClass:'transparent', templateUrl: 'ui/loader/loader.html'}" class="btn btn__success"><span ng-hide="submitInProgress">{{ 'COMMON.button_join' | translate }}</span></button>
         </div>
         <div ng-if="!submitInProgress" ng-show="error_message" class="form-errors">{{ error_message }}</div>

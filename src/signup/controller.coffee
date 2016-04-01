@@ -6,6 +6,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
 
     $scope.locale = moduleSession.getConfig().locale
     $scope.connectProvider = xpFormHelper.connectProvider
+    $scope.socialAuth = moduleSession.getConfig().socialAuth
     registerPromise = null
 
     $scope.register = () ->
