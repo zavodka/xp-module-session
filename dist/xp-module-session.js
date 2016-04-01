@@ -22,15 +22,13 @@ angular.module('xp-module-session').provider('moduleSession', function() {
               case 'login':
                 options = {
                   template: config.loginTemplate ? config.loginTemplate : 'templates/signIn.html',
-                  controller: 'SignInCtrl',
-                  closeByDocument: false
+                  controller: 'SignInCtrl'
                 };
                 break;
               case 'registration':
                 options = {
                   template: config.loginTemplate ? config.loginTemplate : 'templates/signUp.html',
-                  controller: 'SignUpCtrl',
-                  closeByDocument: false
+                  controller: 'SignUpCtrl'
                 };
             }
             return ngDialog.open(options);
@@ -47,56 +45,6 @@ angular.module('xp-module-session').provider('moduleSession', function() {
         };
       }
     ]
-  };
-});
-
-angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope) {
-  var loginPromise;
-  this._form = 'signInForm';
-  this.errors = {
-    10: 'authData'
-  };
-  if (typeof errorMessage !== "undefined" && errorMessage !== null) {
-    $scope.error_message = errorMessage;
-  }
-  loginPromise = null;
-  $scope.locale = moduleSession.getConfig().locale;
-  $scope.connectProvider = xpFormHelper.connectProvider;
-  $scope.socialAuth = moduleSession.getConfig().socialAuth;
-  $scope.login = function() {
-    var params;
-    if ($scope.signIn.$valid && !$scope.submitInProgress) {
-      xpFormHelper.startSubmiting();
-      params = {
-        username: $scope.email,
-        password: $scope.password,
-        remember: $scope.remember
-      };
-      loginPromise = $q.defer();
-      $auth.submitLogin(params).then((function(data) {
-        $auth.auth({
-          name: data.username,
-          roles: ['user']
-        });
-        return $auth.getUserInfo().then(function(user) {
-          moduleSession.close();
-          $rootScope.$broadcast('login:success');
-          return loginPromise.resolve(user);
-        });
-      }), function(res) {
-        return xpFormHelper.errorHandler(res);
-      });
-    }
-    return loginPromise.promise;
-  };
-  $scope.close = function() {
-    return moduleSession.close(loginPromise, 'cancel login');
-  };
-  $scope.showSignUp = function() {
-    return $rootScope.$broadcast('dialog:signup');
-  };
-  return $scope.restorePassword = function() {
-    return $rootScope.$broadcast('dialog:restorePassword');
   };
 });
 
@@ -151,6 +99,56 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
   };
   return $scope.showSignUp = function() {
     return $rootScope.$broadcast('dialog:signup');
+  };
+});
+
+angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope) {
+  var loginPromise;
+  this._form = 'signInForm';
+  this.errors = {
+    10: 'authData'
+  };
+  if (typeof errorMessage !== "undefined" && errorMessage !== null) {
+    $scope.error_message = errorMessage;
+  }
+  loginPromise = null;
+  $scope.locale = moduleSession.getConfig().locale;
+  $scope.connectProvider = xpFormHelper.connectProvider;
+  $scope.socialAuth = moduleSession.getConfig().socialAuth;
+  $scope.login = function() {
+    var params;
+    if ($scope.signIn.$valid && !$scope.submitInProgress) {
+      xpFormHelper.startSubmiting();
+      params = {
+        username: $scope.email,
+        password: $scope.password,
+        remember: $scope.remember
+      };
+      loginPromise = $q.defer();
+      $auth.submitLogin(params).then((function(data) {
+        $auth.auth({
+          name: data.username,
+          roles: ['user']
+        });
+        return $auth.getUserInfo().then(function(user) {
+          moduleSession.close();
+          $rootScope.$broadcast('login:success');
+          return loginPromise.resolve(user);
+        });
+      }), function(res) {
+        return xpFormHelper.errorHandler(res);
+      });
+    }
+    return loginPromise.promise;
+  };
+  $scope.close = function() {
+    return moduleSession.close(loginPromise, 'cancel login');
+  };
+  $scope.showSignUp = function() {
+    return $rootScope.$broadcast('dialog:signup');
+  };
+  return $scope.restorePassword = function() {
+    return $rootScope.$broadcast('dialog:restorePassword');
   };
 });
 

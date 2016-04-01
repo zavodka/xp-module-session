@@ -18,13 +18,11 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             options = {
                                 template: if config.loginTemplate then config.loginTemplate else 'templates/signIn.html'
                                 controller: 'SignInCtrl'
-                                closeByDocument: false
                             }
                         when 'registration'
                             options = {
                                 template: if config.loginTemplate then config.loginTemplate else 'templates/signUp.html'
                                 controller: 'SignUpCtrl'
-                                closeByDocument: false
                             }
 
                     return ngDialog.open(options)
