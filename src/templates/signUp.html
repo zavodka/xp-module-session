@@ -1,6 +1,7 @@
 <div cg-busy="{promise:providerPromise.promise,templateUrl:'ui/loader/fill-loader.html'}" class="module-sessions-signup ui-modal">
     <div class="modal-title">
-        <h1>{{ 'MODAL.signup_title' | translate }}</h1>
+        <h1 ng-show="params.custom_title">{{ params.custom_title }}</h1>
+        <h1 ng-hide="params.custom_title">{{ 'MODAL.signup_title' | translate }}</h1>
     </div>
     <form name="signUpForm" novalidate="novalidate" valdr-type="sessions">
         <p ng-if="socialAuth">{{ 'MODAL.session_social' | translate }}</p>

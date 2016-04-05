@@ -21,7 +21,7 @@ exampleApp.config(function(moduleSessionProvider) {
 
 exampleApp.controller('sampleController', function($scope, moduleSession){
     $scope.signIn = function () {
-        moduleSession.show('login', {});
+        moduleSession.show('login', {custom_title: 'Auth', autocomplete: 'off'});
     };
     $scope.signUp = function () {
         moduleSession.show('registration', {});

@@ -18,11 +18,23 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             options = {
                                 template: if config.loginTemplate then config.loginTemplate else 'templates/signIn.html'
                                 controller: 'SignInCtrl'
+                                resolve:
+                                    customParams: ->
+                                        return {
+                                            custom_title: params.custom_title
+                                            autocomplete: params.autocomplete
+                                        }
                             }
                         when 'registration'
                             options = {
                                 template: if config.loginTemplate then config.loginTemplate else 'templates/signUp.html'
                                 controller: 'SignUpCtrl'
+                                resolve:
+                                    customParams: ->
+                                        return {
+                                            custom_title: params.custom_title
+                                            autocomplete: params.autocomplete
+                                        }
                             }
 
                     return ngDialog.open(options)

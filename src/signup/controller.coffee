@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession, xpFormHelper) ->
+angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession, xpFormHelper, customParams) ->
     @_form = 'signUpForm'
 
     @errors =
@@ -7,6 +7,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
     $scope.locale = moduleSession.getConfig().locale
     $scope.connectProvider = xpFormHelper.connectProvider
     $scope.socialAuth = moduleSession.getConfig().socialAuth
+    $scope.params = customParams
     registerPromise = null
 
     $scope.register = () ->

@@ -1,8 +1,9 @@
 <div cg-busy="providerPromise.promise" class="module-sessions-signup ui-modal">
     <div class="modal-title">
-        <h1>{{ 'MODAL.signin_title' | translate }}</h1>
+        <h1 ng-show="params.custom_title">{{ params.custom_title }}</h1>
+        <h1 ng-hide="params.custom_title">{{ 'MODAL.signin_title' | translate }}</h1>
     </div>
-    <form name="signIn" novalidate="novalidate" formfocus="formfocus" valdr-type="signin">
+    <form name="signIn" novalidate="novalidate" formfocus="formfocus" valdr-type="signin" autocomplete="{{ params.autocomplete }}">
         <p ng-if="socialAuth">{{ 'MODAL.session_social' | translate }}</p>
         <div ng-if="socialAuth" ng-class=" {disabled: submitInProgress} " class="social">
             <div ng-click="connectProvider('facebook')" class="social-button social-button__fb"></div>
