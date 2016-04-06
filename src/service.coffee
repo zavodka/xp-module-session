@@ -5,6 +5,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
         loginTemplate: null
         registerTemplate: null
         socialAuth: true
+        close: true
     return {
         configure: (params) ->
             angular.extend(config, params)
@@ -18,6 +19,9 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             options = {
                                 template: if config.loginTemplate then config.loginTemplate else 'templates/signIn.html'
                                 controller: 'SignInCtrl'
+                                closeByEscape: config.close
+                                closeByNavigation: config.close
+                                closeByDocument: config.close
                                 resolve:
                                     customParams: ->
                                         return {
@@ -29,6 +33,9 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             options = {
                                 template: if config.loginTemplate then config.loginTemplate else 'templates/signUp.html'
                                 controller: 'SignUpCtrl'
+                                closeByEscape: config.close
+                                closeByNavigation: config.close
+                                closeByDocument: config.close
                                 resolve:
                                     customParams: ->
                                         return {

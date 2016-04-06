@@ -7,7 +7,8 @@ angular.module('xp-module-session').provider('moduleSession', function() {
     locale: 'ru',
     loginTemplate: null,
     registerTemplate: null,
-    socialAuth: true
+    socialAuth: true,
+    close: true
   };
   return {
     configure: function(params) {
@@ -23,6 +24,9 @@ angular.module('xp-module-session').provider('moduleSession', function() {
                 options = {
                   template: config.loginTemplate ? config.loginTemplate : 'templates/signIn.html',
                   controller: 'SignInCtrl',
+                  closeByEscape: config.close,
+                  closeByNavigation: config.close,
+                  closeByDocument: config.close,
                   resolve: {
                     customParams: function() {
                       return {
@@ -37,6 +41,9 @@ angular.module('xp-module-session').provider('moduleSession', function() {
                 options = {
                   template: config.loginTemplate ? config.loginTemplate : 'templates/signUp.html',
                   controller: 'SignUpCtrl',
+                  closeByEscape: config.close,
+                  closeByNavigation: config.close,
+                  closeByDocument: config.close,
                   resolve: {
                     customParams: function() {
                       return {
