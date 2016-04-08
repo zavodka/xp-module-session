@@ -73,21 +73,20 @@ angular.module('xp-module-session').provider('moduleSession', function() {
 
 angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
   var loginPromise;
-  this._form = 'signInForm';
-  this.errors = {
+  xpFormHelper.errors = {
     10: 'authData'
   };
-  if (typeof errorMessage !== "undefined" && errorMessage !== null) {
-    $scope.error_message = errorMessage;
-  }
+  $scope.error_message = xpFormHelper.error_message;
   loginPromise = null;
   $scope.locale = moduleSession.getConfig().locale;
   $scope.connectProvider = xpFormHelper.connectProvider;
+  $scope.submitInProgress = xpFormHelper.submitInProgress;
   $scope.socialAuth = moduleSession.getConfig().socialAuth;
   $scope.params = customParams;
   $scope.remember = true;
   $scope.login = function() {
     var params;
+    xpFormHelper._form = $scope.signIn;
     if ($scope.signIn.$valid && !$scope.submitInProgress) {
       xpFormHelper.startSubmiting();
       params = {
@@ -107,7 +106,9 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
           return loginPromise.resolve(user);
         });
       }), function(res) {
-        return xpFormHelper.errorHandler(res);
+        return xpFormHelper.errorHandler(res).then(function(error) {
+          return $scope.error_message = error.message;
+        });
       });
     }
     return loginPromise.promise;
