@@ -76,18 +76,16 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   xpFormHelper.errors = {
     10: 'authData'
   };
-  $scope.error_message = xpFormHelper.error_message;
   loginPromise = null;
   $scope.locale = moduleSession.getConfig().locale;
   $scope.connectProvider = xpFormHelper.connectProvider;
-  $scope.submitInProgress = xpFormHelper.submitInProgress;
   $scope.socialAuth = moduleSession.getConfig().socialAuth;
   $scope.params = customParams;
   $scope.remember = true;
   $scope.login = function() {
     var params;
     xpFormHelper._form = $scope.signIn;
-    if ($scope.signIn.$valid && !$scope.submitInProgress) {
+    if ($scope.signIn.$valid && !xpFormHelper.submitInProgress) {
       xpFormHelper.startSubmiting();
       params = {
         username: $scope.email,
@@ -127,7 +125,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
 angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $scope, $q, moduleSession, xpFormHelper, customParams) {
   var registerPromise;
   this._form = 'signUpForm';
-  this.errors = {
+  xpFormHelper.errors = {
     806: 'email'
   };
   $scope.locale = moduleSession.getConfig().locale;
@@ -137,7 +135,8 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
   registerPromise = null;
   $scope.register = function() {
     var params, password_confirm;
-    if ($scope.signUpForm.$valid && !$scope.submitInProgress) {
+    xpFormHelper._form = $scope.signUpForm;
+    if ($scope.signUpForm.$valid && !xpFormHelper.submitInProgress) {
       xpFormHelper.startSubmiting();
       password_confirm = $scope.password;
       params = {
@@ -155,17 +154,20 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
           password: params.password,
           remember: true
         };
-        return $auth.submitLogin(post_data).then(function(res) {
+        return $auth.submitLogin(params).then((function(data) {
           $auth.auth({
-            name: $scope.email,
+            name: data.username,
             roles: ['user']
           });
           return $auth.getUserInfo().then(function(user) {
             moduleSession.close();
-            return registerPromise.resolve(user);
+            $rootScope.$broadcast('login:success');
+            return loginPromise.resolve(user);
           });
-        }, function(res) {
-          return xpFormHelper.errorHandler(res.data);
+        }), function(res) {
+          return xpFormHelper.errorHandler(res).then(function(error) {
+            return $scope.error_message = error.message;
+          });
         });
       });
       return registerPromise.promise;

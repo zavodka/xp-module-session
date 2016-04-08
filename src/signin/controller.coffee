@@ -2,20 +2,18 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
     xpFormHelper.errors =
         10: 'authData'
 
-    $scope.error_message = xpFormHelper.error_message
     loginPromise = null
 
     $scope.locale = moduleSession.getConfig().locale
 
     $scope.connectProvider = xpFormHelper.connectProvider
-    $scope.submitInProgress = xpFormHelper.submitInProgress
     $scope.socialAuth = moduleSession.getConfig().socialAuth
     $scope.params = customParams
     $scope.remember = true
 
     $scope.login = () ->
         xpFormHelper._form = $scope.signIn
-        if $scope.signIn.$valid and not $scope.submitInProgress
+        if $scope.signIn.$valid and not xpFormHelper.submitInProgress
             do xpFormHelper.startSubmiting
 
             params = {

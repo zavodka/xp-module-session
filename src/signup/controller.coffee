@@ -1,7 +1,7 @@
 angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession, xpFormHelper, customParams) ->
     @_form = 'signUpForm'
 
-    @errors =
+    xpFormHelper.errors =
         806: 'email'
 
     $scope.locale = moduleSession.getConfig().locale
@@ -11,7 +11,8 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
     registerPromise = null
 
     $scope.register = () ->
-        if $scope.signUpForm.$valid and not $scope.submitInProgress
+        xpFormHelper._form = $scope.signUpForm
+        if $scope.signUpForm.$valid and not xpFormHelper.submitInProgress
             do xpFormHelper.startSubmiting
 
             password_confirm = $scope.password
@@ -32,16 +33,18 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
                     password: params.password
                     remember: true
                 }
-                $auth.submitLogin(post_data).then (res) ->
+                $auth.submitLogin(params).then ((data) ->
                     $auth.auth({
-                        name: $scope.email
+                        name: data.username
                         roles: ['user']
                     })
                     $auth.getUserInfo().then (user) ->
                         moduleSession.close()
-                        registerPromise.resolve(user)
-                , (res) ->
-                    xpFormHelper.errorHandler res.data
+                        $rootScope.$broadcast 'login:success'
+                        loginPromise.resolve(user)
+                ), (res) ->
+                    xpFormHelper.errorHandler(res).then (error) ->
+                        $scope.error_message = error.message
 
             return registerPromise.promise
 
