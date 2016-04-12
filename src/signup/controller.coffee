@@ -52,6 +52,6 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
     $scope.close = () ->
         moduleSession.close(registerPromise, 'cancel register')
 
-    $scope.showSignUp = () ->
-        $rootScope.$broadcast 'dialog:signup'
+    $scope.showSignIp = () ->
+        $rootScope.$broadcast 'dialog:signin'
 )
