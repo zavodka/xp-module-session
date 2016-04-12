@@ -178,7 +178,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
     $rootScope.$broadcast('dialog:close');
     return moduleSession.close(registerPromise, 'cancel register');
   };
-  return $scope.showSignIp = function() {
+  return $scope.showSignIn = function() {
     return $rootScope.$broadcast('dialog:signin');
   };
 });
