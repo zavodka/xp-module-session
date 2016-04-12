@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession, xpFormHelper, customParams) ->
+angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q, moduleSession, xpFormHelper, customParams, $rootScope) ->
     @_form = 'signUpForm'
 
     xpFormHelper.errors =
@@ -52,6 +52,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
     $scope.close = () ->
         $rootScope.$broadcast 'dialog:close'
         moduleSession.close(registerPromise, 'cancel register')
+
 
     $scope.showSignIn = () ->
         $rootScope.$broadcast 'dialog:signin'

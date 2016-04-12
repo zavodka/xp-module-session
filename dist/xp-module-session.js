@@ -123,7 +123,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   };
 });
 
-angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $scope, $q, moduleSession, xpFormHelper, customParams) {
+angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $scope, $q, moduleSession, xpFormHelper, customParams, $rootScope) {
   var registerPromise;
   this._form = 'signUpForm';
   xpFormHelper.errors = {
