@@ -41,6 +41,7 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
 
 
     $scope.close = () ->
+        $rootScope.$broadcast 'dialog:close'
         moduleSession.close(loginPromise, 'cancel login')
 
 
