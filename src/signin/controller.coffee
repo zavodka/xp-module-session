@@ -6,8 +6,6 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
 
     $scope.locale = moduleSession.getConfig().locale
 
-    redirectProtocol = if (location.protocol == 'https:') == true then 'https' else 'http'
-    xpFormHelper.provider_redirect = redirectProtocol + '://' + moduleSession.getConfig().redirect_url
     $scope.connectProvider = xpFormHelper.connectProvider
     $scope.socialAuth = moduleSession.getConfig().socialAuth
     $scope.params = customParams

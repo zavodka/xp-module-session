@@ -73,14 +73,12 @@ angular.module('xp-module-session').provider('moduleSession', function() {
 });
 
 angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
-  var loginPromise, redirectProtocol;
+  var loginPromise;
   xpFormHelper.errors = {
     10: 'authData'
   };
   loginPromise = null;
   $scope.locale = moduleSession.getConfig().locale;
-  redirectProtocol = (location.protocol === 'https:') === true ? 'https' : 'http';
-  xpFormHelper.provider_redirect = redirectProtocol + '://' + moduleSession.getConfig().redirect_url;
   $scope.connectProvider = xpFormHelper.connectProvider;
   $scope.socialAuth = moduleSession.getConfig().socialAuth;
   $scope.params = customParams;
