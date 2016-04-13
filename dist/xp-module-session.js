@@ -82,7 +82,9 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   $scope.connectProvider = xpFormHelper.connectProvider;
   $scope.socialAuth = moduleSession.getConfig().socialAuth;
   $scope.params = customParams;
-  $scope.clearError = xpFormHelper.clearError;
+  $scope.clearError = function() {
+    return xpFormHelper.clearError();
+  };
   $scope.remember = true;
   $scope.login = function() {
     var params;

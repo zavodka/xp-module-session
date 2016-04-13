@@ -9,7 +9,8 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
     $scope.connectProvider = xpFormHelper.connectProvider
     $scope.socialAuth = moduleSession.getConfig().socialAuth
     $scope.params = customParams
-    $scope.clearError = xpFormHelper.clearError
+    $scope.clearError = () ->
+        do xpFormHelper.clearError
     $scope.remember = true
 
     $scope.login = () ->
