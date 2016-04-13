@@ -82,8 +82,8 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   $scope.connectProvider = xpFormHelper.connectProvider;
   $scope.socialAuth = moduleSession.getConfig().socialAuth;
   $scope.params = customParams;
-  $scope.error_message = xpFormHelper.error_message;
   $scope.clearError = function(code) {
+    $scope.error_message = '';
     return xpFormHelper.clearError(code);
   };
   $scope.remember = true;
@@ -139,8 +139,8 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
   $scope.socialAuth = moduleSession.getConfig().socialAuth;
   $scope.params = customParams;
   registerPromise = null;
-  $scope.error_message = xpFormHelper.error_message;
   $scope.clearError = function(code) {
+    $scope.error_message = '';
     return xpFormHelper.clearError(code);
   };
   $scope.register = function() {
