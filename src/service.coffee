@@ -6,6 +6,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
         registerTemplate: null
         socialAuth: true
         close: true
+        redirect_url: null
     return {
         configure: (params) ->
             angular.extend(config, params)
