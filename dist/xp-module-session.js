@@ -156,7 +156,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
           password: params.password,
           remember: true
         };
-        return $auth.submitLogin(params).then((function(data) {
+        return $auth.submitLogin(post_data).then((function(data) {
           $auth.auth({
             name: data.username,
             roles: ['user']

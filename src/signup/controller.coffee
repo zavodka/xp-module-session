@@ -33,7 +33,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
                     password: params.password
                     remember: true
                 }
-                $auth.submitLogin(params).then ((data) ->
+                $auth.submitLogin(post_data).then ((data) ->
                     $auth.auth({
                         name: data.username
                         roles: ['user']
