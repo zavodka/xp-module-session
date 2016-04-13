@@ -9,6 +9,9 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
     $scope.socialAuth = moduleSession.getConfig().socialAuth
     $scope.params = customParams
     registerPromise = null
+    $scope.error_message = xpFormHelper.error_message
+    $scope.clearError = (code) ->
+        xpFormHelper.clearError code
 
     $scope.register = () ->
         xpFormHelper._form = $scope.signUpForm
