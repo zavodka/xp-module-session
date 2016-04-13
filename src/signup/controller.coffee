@@ -41,7 +41,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
                     $auth.getUserInfo().then (user) ->
                         moduleSession.close()
                         $rootScope.$broadcast 'login:success'
-                        loginPromise.resolve(user)
+                        registerPromise.resolve(user)
                 ), (res) ->
                     xpFormHelper.errorHandler(res).then (error) ->
                         $scope.error_message = error.message

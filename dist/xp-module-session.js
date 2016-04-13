@@ -164,7 +164,7 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
           return $auth.getUserInfo().then(function(user) {
             moduleSession.close();
             $rootScope.$broadcast('login:success');
-            return loginPromise.resolve(user);
+            return registerPromise.resolve(user);
           });
         }), function(res) {
           return xpFormHelper.errorHandler(res).then(function(error) {
