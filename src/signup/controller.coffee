@@ -48,6 +48,9 @@ angular.module('xp-module-session').controller('SignUpCtrl', ($auth, $scope, $q,
                 ), (res) ->
                     xpFormHelper.errorHandler(res).then (error) ->
                         $scope.error_message = error.message
+            , (res) ->
+                xpFormHelper.errorHandler(res).then (error) ->
+                    $scope.error_message = error.message
 
             return registerPromise.promise
 

@@ -32,7 +32,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             }
                         when 'registration'
                             options = {
-                                template: if config.loginTemplate then config.loginTemplate else 'templates/signUp.html'
+                                template: if config.loginTemplate then config.registerTemplate else 'templates/signUp.html'
                                 controller: 'SignUpCtrl'
                                 closeByEscape: config.close
                                 closeByNavigation: config.close

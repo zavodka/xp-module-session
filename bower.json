@@ -13,7 +13,8 @@
     "xp-base-style": "ssh://git@stash.101xp.com:7999/com/xp-base-style.git",
     "xp-client-auth": "ssh://git@stash.101xp.com:7999/com/xp-clietn-auth.git",
     "xp-form-helper": "ssh://git@stash.101xp.com:7999/com/xp-form-helper.git",
-    "angular-route": "1.4.4"
+    "angular-route": "1.4.4",
+    "valdr": "^1.1.5"
   },
   "ignore": [
     "src",
@@ -21,7 +22,7 @@
   ],
   "devDependencies": {
     "angular-mocks": "1.4.4"
-},
+  },
   "resolutions": {
     "angular": "1.4.4"
   }
