@@ -26,7 +26,8 @@ angular.module('xp-module-session').factory 'matchValidator', ->
     validate: (value, argument) ->
         re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
         return re.test(value)
-    }.config (valdrProvider) ->
+    }
+.config (valdrProvider) ->
     valdrProvider.addValidator('matchValidator')
     valdrProvider.addValidator('notEqualsValidator')
     valdrProvider.addValidator('emailValidator')

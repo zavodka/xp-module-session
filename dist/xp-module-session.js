@@ -25,14 +25,15 @@ angular.module('xp-module-session').factory('matchValidator', function() {
     }
   };
 }).factory('emailValidator', function() {
-  ({
+  return {
     name: 'emailValidator',
     validate: function(value, argument) {
       var re;
       re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
       return re.test(value);
     }
-  }).config(function(valdrProvider) {});
+  };
+}).config(function(valdrProvider) {
   valdrProvider.addValidator('matchValidator');
   valdrProvider.addValidator('notEqualsValidator');
   valdrProvider.addValidator('emailValidator');
