@@ -1,6 +1,38 @@
 angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate', 'valdr']);
 
-angular.module('xp-module-session').config(function(valdrProvider) {
+angular.module('xp-module-session').factory('matchValidator', function() {
+  return {
+    name: 'matchValidator',
+    validate: function(value, argument) {
+      var elem;
+      elem = angular.element(document.getElementsByName(argument.match));
+      if (elem.length === 0 || elem.val() === "") {
+        return true;
+      }
+      return elem.val() === value;
+    }
+  };
+}).factory('notEqualsValidator', function() {
+  return {
+    name: 'notEqualsValidator',
+    validate: function(value, argument) {
+      var elem;
+      elem = angular.element(document.getElementsByName(argument.match));
+      if (elem.length === 0 || elem.val() === "") {
+        return true;
+      }
+      return elem.val() !== value;
+    }
+  };
+}).factory('emailValidator', function() {
+  ({
+    name: 'emailValidator',
+    validate: function(value, argument) {
+      var re;
+      re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+      return re.test(value);
+    }
+  }).config(function(valdrProvider) {});
   valdrProvider.addValidator('matchValidator');
   valdrProvider.addValidator('notEqualsValidator');
   valdrProvider.addValidator('emailValidator');

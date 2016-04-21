@@ -1,6 +1,32 @@
 angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate', 'valdr'])
 
-angular.module('xp-module-session').config (valdrProvider) ->
+angular.module('xp-module-session').factory 'matchValidator', ->
+    {
+    name: 'matchValidator'
+    validate: (value, argument) ->
+        elem = angular.element(document.getElementsByName(argument.match))
+        if elem.length == 0 or elem.val() == ""
+            return true
+
+        elem.val() == value
+    }
+.factory 'notEqualsValidator', ->
+    {
+    name: 'notEqualsValidator'
+    validate: (value, argument) ->
+        elem = angular.element(document.getElementsByName(argument.match))
+        if elem.length == 0 or elem.val() == ""
+            return true
+
+        elem.val() != value
+    }
+.factory 'emailValidator', ->
+    {
+    name: 'emailValidator'
+    validate: (value, argument) ->
+        re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+        return re.test(value)
+    }.config (valdrProvider) ->
     valdrProvider.addValidator('matchValidator')
     valdrProvider.addValidator('notEqualsValidator')
     valdrProvider.addValidator('emailValidator')
