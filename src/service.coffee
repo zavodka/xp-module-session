@@ -44,6 +44,20 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                                             autocomplete: params.autocomplete
                                         }
                             }
+                        when 'password-restore'
+                            options = {
+                                template: if config.loginTemplate then config.registerTemplate else 'templates/passwordRestore.html'
+                                controller: 'PasswordRestoreCtrl'
+                                closeByEscape: config.close
+                                closeByNavigation: config.close
+                                closeByDocument: config.close
+                                resolve:
+                                    customParams: ->
+                                        return {
+                                            custom_title: params.custom_title
+                                            autocomplete: params.autocomplete
+                                        }
+                        }
 
                     return ngDialog.open(options)
 
