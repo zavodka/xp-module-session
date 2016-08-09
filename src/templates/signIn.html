@@ -33,6 +33,9 @@
             <button ng-click="login()" cg-busy="{promise:loginPromise,wrapperClass:'transparent', templateUrl: 'ui/loader/loader.html'}" class="btn btn__success"><span ng-hide="submitInProgress">{{ 'COMMON.button_signin' | translate }}</span></button>
         </div>
         <div ng-if="!submitInProgress" ng-show="error_message" class="form-errors">{{ error_message }}</div>
-        <div class="modal-footer">{{ 'MODAL.session_no_account' | translate }}&nbsp;<a ng-click="showSignUp()">{{ 'COMMON.button_signup' | translate }}</a></div>
+        <div class="modal-footer">
+            {{ 'MODAL.session_no_account' | translate }}&nbsp;<a ng-click="showSignUp()">{{ 'COMMON.button_signup' | translate }}</a><br />
+            {{ 'MODAL.forgot_password_text' | translate }}&nbsp;<a ng-click="restorePassword()">{{ 'MODAL.forgot_password_link' | translate }}</a>
+        </div>
     </form>
 </div>
