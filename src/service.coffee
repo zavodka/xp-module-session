@@ -45,6 +45,8 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                                         }
                             }
                         when 'password-restore'
+                            console.log 'password-restore'
+                            console.dir params
                             options = {
                                 template: if config.restoreTemplate then config.restoreTemplate else 'password-restore/views/' + params.step + '.html'
                                 controller: 'PasswordRestoreCtrl'
@@ -59,6 +61,8 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                                         }
                         }
 
+                    console.log 'options'
+                    console.dir options
                     return ngDialog.open(options)
 
                 close: (dfd, reason) ->
