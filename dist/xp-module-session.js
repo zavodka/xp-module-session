@@ -230,6 +230,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
     var renew;
     return renew = $auth.renewPassword({
       code: $scope.code,
+      client_id: '5B1EB814FEC8C',
       password: $scope.form.password,
       password_confirm: $scope.form.password_confirm
     });

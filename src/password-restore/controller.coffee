@@ -41,7 +41,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
     $scope.passwordRenew = () ->
         renew = $auth.renewPassword({
             code: $scope.code
-            # client_id: self.configuration.client_id
+            client_id: '5B1EB814FEC8C' # self.configuration.client_id
             password: $scope.form.password
             password_confirm: $scope.form.password_confirm
         })
