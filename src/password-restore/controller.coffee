@@ -33,9 +33,8 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
         }
 
         $rootScope.$on 'auth:password-reset-request-error', (event, res) ->
+            xpFormHelper.errorHandler res.data
             emailSendPromise.reject()
-
-        xpFormHelper.errorHandler res.data
 
 
     $scope.passwordRenew = () ->
