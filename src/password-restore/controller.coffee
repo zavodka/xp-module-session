@@ -8,7 +8,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
 
     xpFormHelper.submitInProgress = false
 
-    $scope.emailSend: () ->
+    $scope.emailSend = () ->
         return unless @$scope[@_form].$valid
 
         xpFormHelper.submitInProgress = true
@@ -37,7 +37,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
         xpFormHelper.errorHandler res.data
 
 
-    $scope.passwordRenew: () ->
+    $scope.passwordRenew = () ->
         renew = $auth.renewPassword({
             code: self.s.code
             client_id: self.configuration.client_id
