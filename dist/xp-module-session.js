@@ -194,7 +194,64 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
+angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
+  var loginPromise;
+  xpFormHelper.errors = {
+    10: 'authData'
+  };
+  loginPromise = null;
+  $scope.locale = moduleSession.getConfig().locale;
+  $scope.connectProvider = xpFormHelper.connectProvider;
+  $scope.socialAuth = moduleSession.getConfig().socialAuth;
+  $scope.params = customParams;
+  $scope.clearError = function(code) {
+    $scope.error_message = '';
+    return xpFormHelper.clearError(code);
+  };
+  $scope.remember = true;
+  $scope.login = function() {
+    var params;
+    xpFormHelper._form = $scope.signIn;
+    if ($scope.signIn.$valid && !xpFormHelper.submitInProgress) {
+      xpFormHelper.startSubmiting();
+      params = {
+        username: $scope.email,
+        password: $scope.password,
+        remember: $scope.remember
+      };
+      loginPromise = $q.defer();
+      $auth.submitLogin(params).then((function(data) {
+        $auth.auth({
+          name: data.username,
+          roles: ['user']
+        });
+        return $auth.getUserInfo().then(function(user) {
+          moduleSession.close();
+          $rootScope.$broadcast('login:success');
+          return loginPromise.resolve(user);
+        });
+      }), function(res) {
+        return xpFormHelper.errorHandler(res).then(function(error) {
+          return $scope.error_message = error.message;
+        });
+      });
+    }
+    return loginPromise.promise;
+  };
+  $scope.close = function() {
+    $rootScope.$broadcast('dialog:close');
+    return moduleSession.close(loginPromise, 'cancel login');
+  };
+  $scope.showSignUp = function() {
+    return $rootScope.$broadcast('dialog:signup');
+  };
+  return $scope.restorePassword = function() {
+    return $rootScope.$broadcast('dialog:restorePassword');
+  };
+});
+
 angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
+  var emailSendPromise;
   this._form = 'email_confirm_form';
   xpFormHelper.errors = {
     813: 'nonExistentEmail'
@@ -213,16 +270,16 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
       locale: self.$rootScope.locale
     });
   };
-  xpFormHelper.emailSendPromise = deferred.promise;
+  emailSendPromise = $q.defer();
   $rootScope.$on('auth:password-reset-request-success', function(event) {
-    deferred.resolve();
+    emailSendPromise.resolve();
     xpFormHelper.submitInProgress = false;
     $rootScope.$broadcast('popup:show', {
       type: 'password-restore',
       step: 'send'
     });
     $rootScope.$on('auth:password-reset-request-error', function(event, res) {
-      return deferred.reject();
+      return emailSendPromise.reject();
     });
     return xpFormHelper.errorHandler(res.data);
   });
@@ -242,7 +299,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
     });
   });
   $auth.getUserInfo();
-  return $rootScope.$on('auth:password-renew-error', function(event, res) {});
+  return $rootScope.$on('auth:password-renew-error', function(event, res) {
+    return $scope.error_message = error.message;
+  });
 });
 
 angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $scope, $q, moduleSession, xpFormHelper, customParams, $rootScope) {
@@ -310,62 +369,6 @@ angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $sc
   };
   return $scope.showSignIn = function() {
     return $rootScope.$broadcast('dialog:signin');
-  };
-});
-
-angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
-  var loginPromise;
-  xpFormHelper.errors = {
-    10: 'authData'
-  };
-  loginPromise = null;
-  $scope.locale = moduleSession.getConfig().locale;
-  $scope.connectProvider = xpFormHelper.connectProvider;
-  $scope.socialAuth = moduleSession.getConfig().socialAuth;
-  $scope.params = customParams;
-  $scope.clearError = function(code) {
-    $scope.error_message = '';
-    return xpFormHelper.clearError(code);
-  };
-  $scope.remember = true;
-  $scope.login = function() {
-    var params;
-    xpFormHelper._form = $scope.signIn;
-    if ($scope.signIn.$valid && !xpFormHelper.submitInProgress) {
-      xpFormHelper.startSubmiting();
-      params = {
-        username: $scope.email,
-        password: $scope.password,
-        remember: $scope.remember
-      };
-      loginPromise = $q.defer();
-      $auth.submitLogin(params).then((function(data) {
-        $auth.auth({
-          name: data.username,
-          roles: ['user']
-        });
-        return $auth.getUserInfo().then(function(user) {
-          moduleSession.close();
-          $rootScope.$broadcast('login:success');
-          return loginPromise.resolve(user);
-        });
-      }), function(res) {
-        return xpFormHelper.errorHandler(res).then(function(error) {
-          return $scope.error_message = error.message;
-        });
-      });
-    }
-    return loginPromise.promise;
-  };
-  $scope.close = function() {
-    $rootScope.$broadcast('dialog:close');
-    return moduleSession.close(loginPromise, 'cancel login');
-  };
-  $scope.showSignUp = function() {
-    return $rootScope.$broadcast('dialog:signup');
-  };
-  return $scope.restorePassword = function() {
-    return $rootScope.$broadcast('dialog:restorePassword');
   };
 });
 
