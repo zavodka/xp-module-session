@@ -54,6 +54,5 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
 
 
     $scope.restorePassword = () ->
-        alert '111'
         $rootScope.$broadcast 'dialog:restorePassword'
 )
