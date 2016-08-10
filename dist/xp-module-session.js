@@ -161,8 +161,6 @@ angular.module('xp-module-session').provider('moduleSession', function() {
                 };
                 break;
               case 'password-restore':
-                console.log('password-restore');
-                console.dir(params);
                 options = {
                   template: config.restoreTemplate ? config.restoreTemplate : 'password-restore/views/' + params.step + '.html',
                   controller: 'PasswordRestoreCtrl',
@@ -179,8 +177,6 @@ angular.module('xp-module-session').provider('moduleSession', function() {
                   }
                 };
             }
-            console.log('options');
-            console.dir(options);
             return ngDialog.open(options);
           },
           close: function(dfd, reason) {
@@ -285,6 +281,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
     return $rootScope.$broadcast('dialog:signup');
   };
   return $scope.restorePassword = function() {
+    alert('111');
     return $rootScope.$broadcast('dialog:restorePassword');
   };
 });
