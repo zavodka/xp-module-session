@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) ->
+angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) ->
     xpFormHelper.errors =
       813: 'nonExistentEmail'
 
@@ -26,7 +26,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
 
         $rootScope.$on 'auth:password-reset-request-success', (event) ->
             xpFormHelper.submitInProgress = false
-            $rootScope.$broadcast 'popup:show', {
+            $rootScope.$broadcast 'dialog:restorePassword', {
                 type: 'password-restore'
                 step: 'send'
             }
