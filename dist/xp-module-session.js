@@ -196,14 +196,13 @@ angular.module('xp-module-session').provider('moduleSession', function() {
 
 angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
   var emailSendPromise;
-  this._form = 'email_confirm_form';
   xpFormHelper.errors = {
     813: 'nonExistentEmail'
   };
   xpFormHelper.submitInProgress = false;
   $scope.emailSend = function() {
     var deferred, reset;
-    if (!$scope[this._form].$valid) {
+    if (!$scope.email_confirm_form.$valid) {
       return;
     }
     xpFormHelper.submitInProgress = true;

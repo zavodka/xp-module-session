@@ -1,6 +1,4 @@
 angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) ->
-    @_form = 'email_confirm_form'
-
     xpFormHelper.errors =
       813: 'nonExistentEmail'
 
@@ -9,7 +7,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
     xpFormHelper.submitInProgress = false
 
     $scope.emailSend = () ->
-        return unless $scope[@_form].$valid
+        return unless $scope.email_confirm_form.$valid
 
         xpFormHelper.submitInProgress = true
 
