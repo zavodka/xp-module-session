@@ -18,7 +18,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                     switch type
                         when 'login'
                             options = {
-                                template: if config.loginTemplate then config.loginTemplate else 'templates/signIn.html'
+                                template: if config.loginTemplate then config.loginTemplate else 'signin/views/view.html'
                                 controller: 'SignInCtrl'
                                 closeByEscape: config.close
                                 closeByNavigation: config.close
@@ -32,7 +32,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             }
                         when 'registration'
                             options = {
-                                template: if config.loginTemplate then config.registerTemplate else 'templates/signUp.html'
+                                template: if config.loginTemplate then config.registerTemplate else 'signup/views/view.html'
                                 controller: 'SignUpCtrl'
                                 closeByEscape: config.close
                                 closeByNavigation: config.close
@@ -46,7 +46,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             }
                         when 'password-restore'
                             options = {
-                                template: if config.loginTemplate then config.registerTemplate else 'templates/passwordRestore.html'
+                                template: if config.loginTemplate then config.registerTemplate else 'password-restore/views/view.html'
                                 controller: 'PasswordRestoreCtrl'
                                 closeByEscape: config.close
                                 closeByNavigation: config.close

@@ -15,22 +15,22 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
         xpFormHelper.submitInProgress = true
 
         deferred = $q.defer()
-        console.dir $scope.params
+
         reset = $auth.requestPasswordReset({
             client_id: '5B1EB814FEC8C' # $scope.params.client_id
             email: $scope.form.email
             locale: $scope.locale
-      })
+        })
 
-    emailSendPromise = $q.defer()
+        emailSendPromise = $q.defer()
 
-    $rootScope.$on 'auth:password-reset-request-success', (event) ->
-        emailSendPromise.resolve()
-        xpFormHelper.submitInProgress = false
-        $rootScope.$broadcast 'popup:show', {
-            type: 'password-restore'
-            step: 'send'
-        }
+        $rootScope.$on 'auth:password-reset-request-success', (event) ->
+            emailSendPromise.resolve()
+            xpFormHelper.submitInProgress = false
+            $rootScope.$broadcast 'popup:show', {
+                type: 'password-restore'
+                step: 'send'
+            }
 
         $rootScope.$on 'auth:password-reset-request-error', (event, res) ->
             xpFormHelper.errorHandler res.data
@@ -45,16 +45,16 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
             password_confirm: $scope.form.password_confirm
         })
 
-    $rootScope.$on 'auth:password-renew-success', (event, res) ->
-          $auth.handleValidAuth(res, true)
-          principal.authenticate({
-            #TODO Крашится, когда тут передается username, т.к. он из ответа и не приходит. По сути вообще name не нужен
-            #name: data.username,
-            roles: ['user']
-        })
+        $rootScope.$on 'auth:password-renew-success', (event, res) ->
+              $auth.handleValidAuth(res, true)
+              principal.authenticate({
+                #TODO Крашится, когда тут передается username, т.к. он из ответа и не приходит. По сути вообще name не нужен
+                #name: data.username,
+                roles: ['user']
+            })
 
-        $auth.getUserInfo()
+            $auth.getUserInfo()
 
-        $rootScope.$on 'auth:password-renew-error', (event, res) ->
-            $scope.error_message = error.message
+            $rootScope.$on 'auth:password-renew-error', (event, res) ->
+                $scope.error_message = error.message
 )
