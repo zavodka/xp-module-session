@@ -162,7 +162,7 @@ angular.module('xp-module-session').provider('moduleSession', function() {
                 break;
               case 'password-restore':
                 options = {
-                  template: config.restoreTemplate ? config.restoreTemplate : 'password-restore/views/' + config.step + '.html',
+                  template: config.restoreTemplate ? config.restoreTemplate : 'password-restore/views/' + params.step + '.html',
                   controller: 'PasswordRestoreCtrl',
                   closeByEscape: config.close,
                   closeByNavigation: config.close,
