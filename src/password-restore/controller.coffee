@@ -7,7 +7,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
     xpFormHelper.submitInProgress = false
 
     $scope.locale = moduleSession.getConfig().locale
-    # $scope.params = customParams
+    $scope.params = customParams
 
     $scope.emailSend = () ->
         return unless $scope.email_confirm_form.$valid
@@ -15,9 +15,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
         xpFormHelper.submitInProgress = true
 
         deferred = $q.defer()
-
+        console.dir $scope.params
         reset = $auth.requestPasswordReset({
-            # client_id: $scope.params.client_id
+            client_id: '5B1EB814FEC8C' # $scope.params.client_id
             email: $scope.form.email
             locale: $scope.locale
       })

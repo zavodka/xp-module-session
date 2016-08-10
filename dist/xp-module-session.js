@@ -201,6 +201,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
   };
   xpFormHelper.submitInProgress = false;
   $scope.locale = moduleSession.getConfig().locale;
+  $scope.params = customParams;
   $scope.emailSend = function() {
     var deferred, reset;
     if (!$scope.email_confirm_form.$valid) {
@@ -208,7 +209,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
     }
     xpFormHelper.submitInProgress = true;
     deferred = $q.defer();
+    console.dir($scope.params);
     return reset = $auth.requestPasswordReset({
+      client_id: '5B1EB814FEC8C',
       email: $scope.form.email,
       locale: $scope.locale
     });
