@@ -200,6 +200,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
     813: 'nonExistentEmail'
   };
   xpFormHelper.submitInProgress = false;
+  $scope.locale = moduleSession.getConfig().locale;
   $scope.emailSend = function() {
     var deferred, reset;
     if (!$scope.email_confirm_form.$valid) {
@@ -208,9 +209,8 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
     xpFormHelper.submitInProgress = true;
     deferred = $q.defer();
     return reset = $auth.requestPasswordReset({
-      client_id: self.configuration.client_id,
-      email: self.s.form.email,
-      locale: self.$rootScope.locale
+      email: $scope.form.email,
+      locale: $scope.locale
     });
   };
   emailSendPromise = $q.defer();
@@ -229,10 +229,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($
   $scope.passwordRenew = function() {
     var renew;
     return renew = $auth.renewPassword({
-      code: self.s.code,
-      client_id: self.configuration.client_id,
-      password: self.s.form.password,
-      password_confirm: self.s.form.password_confirm
+      code: $scope.code,
+      password: $scope.form.password,
+      password_confirm: $scope.form.password_confirm
     });
   };
   $rootScope.$on('auth:password-renew-success', function(event, res) {

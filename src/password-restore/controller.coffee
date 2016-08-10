@@ -6,6 +6,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
 
     xpFormHelper.submitInProgress = false
 
+    $scope.locale = moduleSession.getConfig().locale
+    # $scope.params = customParams
+
     $scope.emailSend = () ->
         return unless $scope.email_confirm_form.$valid
 
@@ -14,9 +17,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
         deferred = $q.defer()
 
         reset = $auth.requestPasswordReset({
-            client_id: self.configuration.client_id
-            email: self.s.form.email
-            locale: self.$rootScope.locale
+            # client_id: $scope.params.client_id
+            email: $scope.form.email
+            locale: $scope.locale
       })
 
     emailSendPromise = $q.defer()
@@ -37,10 +40,10 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
 
     $scope.passwordRenew = () ->
         renew = $auth.renewPassword({
-            code: self.s.code
-            client_id: self.configuration.client_id
-            password: self.s.form.password
-            password_confirm: self.s.form.password_confirm
+            code: $scope.code
+            # client_id: self.configuration.client_id
+            password: $scope.form.password
+            password_confirm: $scope.form.password_confirm
         })
 
     $rootScope.$on 'auth:password-renew-success', (event, res) ->
