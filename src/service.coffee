@@ -46,7 +46,7 @@ angular.module('xp-module-session').provider('moduleSession',  ->
                             }
                         when 'password-restore'
                             options = {
-                                template: if config.loginTemplate then config.registerTemplate else 'password-restore/views/view.html'
+                                template: if config.restoreTemplate then config.restoreTemplate else 'password-restore/views/' + config.step + '.html'
                                 controller: 'PasswordRestoreCtrl'
                                 closeByEscape: config.close
                                 closeByNavigation: config.close
