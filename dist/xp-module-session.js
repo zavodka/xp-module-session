@@ -194,6 +194,60 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
+angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
+  var emailSendPromise;
+  this._form = 'email_confirm_form';
+  xpFormHelper.errors = {
+    813: 'nonExistentEmail'
+  };
+  xpFormHelper.submitInProgress = false;
+  $scope.emailSend = function() {
+    var deferred, reset;
+    if (!$scope[this._form].$valid) {
+      return;
+    }
+    xpFormHelper.submitInProgress = true;
+    deferred = $q.defer();
+    return reset = $auth.requestPasswordReset({
+      client_id: self.configuration.client_id,
+      email: self.s.form.email,
+      locale: self.$rootScope.locale
+    });
+  };
+  emailSendPromise = $q.defer();
+  $rootScope.$on('auth:password-reset-request-success', function(event) {
+    emailSendPromise.resolve();
+    xpFormHelper.submitInProgress = false;
+    $rootScope.$broadcast('popup:show', {
+      type: 'password-restore',
+      step: 'send'
+    });
+    $rootScope.$on('auth:password-reset-request-error', function(event, res) {
+      return emailSendPromise.reject();
+    });
+    return xpFormHelper.errorHandler(res.data);
+  });
+  $scope.passwordRenew = function() {
+    var renew;
+    return renew = $auth.renewPassword({
+      code: self.s.code,
+      client_id: self.configuration.client_id,
+      password: self.s.form.password,
+      password_confirm: self.s.form.password_confirm
+    });
+  };
+  $rootScope.$on('auth:password-renew-success', function(event, res) {
+    $auth.handleValidAuth(res, true);
+    return principal.authenticate({
+      roles: ['user']
+    });
+  });
+  $auth.getUserInfo();
+  return $rootScope.$on('auth:password-renew-error', function(event, res) {
+    return $scope.error_message = error.message;
+  });
+});
+
 angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
   var loginPromise;
   xpFormHelper.errors = {
@@ -248,60 +302,6 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   return $scope.restorePassword = function() {
     return $rootScope.$broadcast('dialog:restorePassword');
   };
-});
-
-angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
-  var emailSendPromise;
-  this._form = 'email_confirm_form';
-  xpFormHelper.errors = {
-    813: 'nonExistentEmail'
-  };
-  xpFormHelper.submitInProgress = false;
-  $scope.emailSend = function() {
-    var deferred, reset;
-    if (!this.$scope[this._form].$valid) {
-      return;
-    }
-    xpFormHelper.submitInProgress = true;
-    deferred = this.$q.defer();
-    return reset = $auth.requestPasswordReset({
-      client_id: self.configuration.client_id,
-      email: self.s.form.email,
-      locale: self.$rootScope.locale
-    });
-  };
-  emailSendPromise = $q.defer();
-  $rootScope.$on('auth:password-reset-request-success', function(event) {
-    emailSendPromise.resolve();
-    xpFormHelper.submitInProgress = false;
-    $rootScope.$broadcast('popup:show', {
-      type: 'password-restore',
-      step: 'send'
-    });
-    $rootScope.$on('auth:password-reset-request-error', function(event, res) {
-      return emailSendPromise.reject();
-    });
-    return xpFormHelper.errorHandler(res.data);
-  });
-  $scope.passwordRenew = function() {
-    var renew;
-    return renew = $auth.renewPassword({
-      code: self.s.code,
-      client_id: self.configuration.client_id,
-      password: self.s.form.password,
-      password_confirm: self.s.form.password_confirm
-    });
-  };
-  $rootScope.$on('auth:password-renew-success', function(event, res) {
-    $auth.handleValidAuth(res, true);
-    return principal.authenticate({
-      roles: ['user']
-    });
-  });
-  $auth.getUserInfo();
-  return $rootScope.$on('auth:password-renew-error', function(event, res) {
-    return $scope.error_message = error.message;
-  });
 });
 
 angular.module('xp-module-session').controller('SignUpCtrl', function($auth, $scope, $q, moduleSession, xpFormHelper, customParams, $rootScope) {

@@ -9,11 +9,11 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
     xpFormHelper.submitInProgress = false
 
     $scope.emailSend = () ->
-        return unless @$scope[@_form].$valid
+        return unless $scope[@_form].$valid
 
         xpFormHelper.submitInProgress = true
 
-        deferred = @$q.defer()
+        deferred = $q.defer()
 
         reset = $auth.requestPasswordReset({
             client_id: self.configuration.client_id
