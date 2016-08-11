@@ -194,41 +194,6 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
-angular.module('xp-module-session', ['ngAnimate', 'cgBusy']).controller('PasswordRestoreCtrl', function($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
-  xpFormHelper.errors = {
-    813: 'nonExistentEmail'
-  };
-  xpFormHelper.submitInProgress = false;
-  $scope.locale = moduleSession.getConfig().locale;
-  $scope.params = customParams;
-  return $scope.emailSend = function() {
-    var deferred, reset;
-    if (!$scope.email_confirm_form.$valid) {
-      return;
-    }
-    xpFormHelper.submitInProgress = true;
-    deferred = $q.defer();
-    reset = $auth.requestPasswordReset({
-      client_id: '5B1EB814FEC8C',
-      email: $scope.form.email,
-      locale: $scope.locale
-    });
-    xpFormHelper.emailSendPromise = $q.defer();
-    $rootScope.$on('auth:password-reset-request-success', function(event) {
-      xpFormHelper.submitInProgress = false;
-      $rootScope.$broadcast('dialog:restorePassword', {
-        type: 'password-restore',
-        step: 'send'
-      });
-      return xpFormHelper.emailSendPromise.resolve();
-    });
-    return $rootScope.$on('auth:password-reset-request-error', function(event, res) {
-      xpFormHelper.errorHandler(res.data);
-      return xpFormHelper.emailSendPromise.reject();
-    });
-  };
-});
-
 angular.module('xp-module-session').controller('SignInCtrl', function($auth, $scope, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
   var loginPromise;
   xpFormHelper.errors = {
@@ -282,6 +247,41 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   };
   return $scope.restorePassword = function() {
     return $rootScope.$broadcast('dialog:restorePassword');
+  };
+});
+
+angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
+  xpFormHelper.errors = {
+    813: 'nonExistentEmail'
+  };
+  xpFormHelper.submitInProgress = false;
+  $scope.locale = moduleSession.getConfig().locale;
+  $scope.params = customParams;
+  return $scope.emailSend = function() {
+    var deferred, reset;
+    if (!$scope.email_confirm_form.$valid) {
+      return;
+    }
+    xpFormHelper.submitInProgress = true;
+    deferred = $q.defer();
+    reset = $auth.requestPasswordReset({
+      client_id: '5B1EB814FEC8C',
+      email: $scope.form.email,
+      locale: $scope.locale
+    });
+    xpFormHelper.emailSendPromise = $q.defer();
+    $rootScope.$on('auth:password-reset-request-success', function(event) {
+      xpFormHelper.submitInProgress = false;
+      $rootScope.$broadcast('dialog:restorePassword', {
+        type: 'password-restore',
+        step: 'send'
+      });
+      return xpFormHelper.emailSendPromise.resolve();
+    });
+    return $rootScope.$on('auth:password-reset-request-error', function(event, res) {
+      xpFormHelper.errorHandler(res.data);
+      return xpFormHelper.emailSendPromise.reject();
+    });
   };
 });
 
