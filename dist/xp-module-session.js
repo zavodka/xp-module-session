@@ -246,6 +246,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
   $scope.remember = true;
   $scope.login = function() {
     var params;
+    xpFormHelper.submitInProgress = true;
     xpFormHelper._form = $scope.signIn;
     if ($scope.signIn.$valid && !xpFormHelper.submitInProgress) {
       xpFormHelper.startSubmiting();
@@ -260,13 +261,15 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
           name: data.username,
           roles: ['user']
         });
-        return $auth.getUserInfo().then(function(user) {
+        $auth.getUserInfo().then(function(user) {
           moduleSession.close();
           return $rootScope.$broadcast('login:success');
         });
+        return xpFormHelper.submitInProgress = false;
       }), function(res) {
         return xpFormHelper.errorHandler(res).then(function(error) {
-          return $scope.error_message = error.message;
+          $scope.error_message = error.message;
+          return xpFormHelper.submitInProgress = false;
         });
       });
     }

@@ -16,7 +16,9 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
     $scope.remember = true
 
     $scope.login = () ->
+        xpFormHelper.submitInProgress = true
         xpFormHelper._form = $scope.signIn
+
         if $scope.signIn.$valid and not xpFormHelper.submitInProgress
             do xpFormHelper.startSubmiting
 
@@ -36,9 +38,11 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
                 $auth.getUserInfo().then (user) ->
                     moduleSession.close()
                     $rootScope.$broadcast 'login:success'
+                xpFormHelper.submitInProgress = false
             ), (res) ->
                 xpFormHelper.errorHandler(res).then (error) ->
                     $scope.error_message = error.message
+                    xpFormHelper.submitInProgress = false
 
 
     $scope.close = () ->
