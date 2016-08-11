@@ -22,7 +22,7 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
             locale: $scope.locale
         })
 
-        emailSendPromise = $q.defer()
+        xpFormHelper.emailSendPromise = $q.defer()
 
         $rootScope.$on 'auth:password-reset-request-success', (event) ->
             xpFormHelper.submitInProgress = false
@@ -30,9 +30,9 @@ angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $s
                 type: 'password-restore'
                 step: 'send'
             }
-            emailSendPromise.resolve()
+            xpFormHelper.emailSendPromise.resolve()
 
         $rootScope.$on 'auth:password-reset-request-error', (event, res) ->
             xpFormHelper.errorHandler res.data
-            emailSendPromise.reject()
+            xpFormHelper.emailSendPromise.reject()
 )
