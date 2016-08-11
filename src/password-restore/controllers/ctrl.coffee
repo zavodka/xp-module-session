@@ -1,4 +1,4 @@
-angular.module('xp-module-session').controller('PasswordRestoreCtrl', ($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams, cgBusy) ->
+angular.module('xp-module-session', ['ngAnimate', 'cgBusy']).controller('PasswordRestoreCtrl', ($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) ->
     xpFormHelper.errors =
       813: 'nonExistentEmail'
 
