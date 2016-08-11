@@ -26,10 +26,9 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
                 remember: $scope.remember
             }
 
-            loginPromise = $q.defer()
-            console.dir loginPromise
+            $scope.loginPromise = $auth.submitLogin(params)
 
-            $auth.submitLogin(params).then ((data) ->
+            loginPromise.then ((data) ->
                 $auth.auth({
                     name: data.username
                     roles: ['user']
@@ -37,17 +36,14 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
                 $auth.getUserInfo().then (user) ->
                     moduleSession.close()
                     $rootScope.$broadcast 'login:success'
-                    loginPromise.resolve(user)
             ), (res) ->
                 xpFormHelper.errorHandler(res).then (error) ->
                     $scope.error_message = error.message
 
-        return loginPromise.promise
-
 
     $scope.close = () ->
         $rootScope.$broadcast 'dialog:close'
-        moduleSession.close(loginPromise, 'cancel login')
+        moduleSession.close()
 
 
     $scope.showSignUp = () ->
