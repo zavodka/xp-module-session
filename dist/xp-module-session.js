@@ -255,6 +255,7 @@ angular.module('xp-module-session').controller('SignInCtrl', function($auth, $sc
         remember: $scope.remember
       };
       loginPromise = $q.defer();
+      console.dir(loginPromise);
       $auth.submitLogin(params).then((function(data) {
         $auth.auth({
           name: data.username,

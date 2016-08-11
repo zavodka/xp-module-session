@@ -27,6 +27,7 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
             }
 
             loginPromise = $q.defer()
+            console.dir loginPromise
 
             $auth.submitLogin(params).then ((data) ->
                 $auth.auth({
