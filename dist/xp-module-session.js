@@ -194,7 +194,7 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
-angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
+angular.module('xp-module-session', ['cgBusy']).controller('PasswordRestoreCtrl', function($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
   xpFormHelper.errors = {
     813: 'nonExistentEmail'
   };
