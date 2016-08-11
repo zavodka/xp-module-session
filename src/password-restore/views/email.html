@@ -9,7 +9,6 @@
                 <input type="email" name="email" ng-model="form.email" ng-keyup="clearError(813)"/>
             </div>
             <div ng-show="error_message" class="form-errors">{{ error_message }}</div>
-            emailSendPromise = {{ emailSendPromise }}
             <button ng-click="emailSend()" cg-busy="{promise:emailSendPromise,wrapperClass:'transparent'}" class="btn btn__success"><span ng-bind="'COMMON.button_continue' | translate" ng-hide="submitInProgress"> </span></button>
         </div>
     </form>
