@@ -1,4 +1,4 @@
-angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate', 'valdr'])
+angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate', 'valdr', 'cgBusy'])
 
 angular.module('xp-module-session').factory 'matchValidator', ->
     {

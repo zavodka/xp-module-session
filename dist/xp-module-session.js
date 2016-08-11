@@ -1,4 +1,4 @@
-angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate', 'valdr']);
+angular.module('xp-module-session', ['ngDialog', 'sessionTemplates', 'xp-form-helper', 'pascalprecht.translate', 'valdr', 'cgBusy']);
 
 angular.module('xp-module-session').factory('matchValidator', function() {
   return {
@@ -194,7 +194,7 @@ angular.module('xp-module-session').provider('moduleSession', function() {
   };
 });
 
-angular.module('xp-module-session', ['cgBusy']).controller('PasswordRestoreCtrl', function($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
+angular.module('xp-module-session').controller('PasswordRestoreCtrl', function($auth, $scope, $state, moduleSession, $q, xpFormHelper, $rootScope, customParams) {
   xpFormHelper.errors = {
     813: 'nonExistentEmail'
   };
