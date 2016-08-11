@@ -28,7 +28,7 @@ angular.module('xp-module-session').controller('SignInCtrl', ($auth, $scope, mod
 
             $scope.loginPromise = $auth.submitLogin(params)
 
-            loginPromise.then ((data) ->
+            $scope.loginPromise.then ((data) ->
                 $auth.auth({
                     name: data.username
                     roles: ['user']
